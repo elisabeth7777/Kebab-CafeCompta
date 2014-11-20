@@ -1,0 +1,7 @@
+parameters:
+#    kebab_compta.example.class: Kebab\ComptaBundle\Example
+
+services:
+#    kebab_compta.example:
+#        class: %kebab_compta.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

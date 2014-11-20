@@ -1,0 +1,45 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Article list</h1>
+
+    <table class="table table-bordered table-hover table-striped table-responsive">
+        <thead>
+            <tr>
+                <th>Code Compta</th>
+                <th>Nom</th>
+                <th>Taxes</th>
+                <th>Type</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('article_show', { 'id': entity.id }) }}">{{ entity.codeCpte }}</a></td>
+                <td>{{ entity.nom }}</td>
+                <td>{{ entity.taxes }}</td>
+                <td>{% if entity.type == true %} H.T {% else %} T.T.C {% endif %}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('article_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('article_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('article_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+    {% endblock %}

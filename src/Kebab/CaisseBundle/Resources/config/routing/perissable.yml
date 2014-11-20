@@ -1,0 +1,30 @@
+perissable:
+    path:     /
+    defaults: { _controller: "KebabCaisseBundle:Perissable:index" }
+
+perissable_show:
+    path:     /{id}/show
+    defaults: { _controller: "KebabCaisseBundle:Perissable:show" }
+
+perissable_new:
+    path:     /new
+    defaults: { _controller: "KebabCaisseBundle:Perissable:new" }
+
+perissable_create:
+    path:     /create
+    defaults: { _controller: "KebabCaisseBundle:Perissable:create" }
+    requirements: { _method: post }
+
+perissable_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "KebabCaisseBundle:Perissable:edit" }
+
+perissable_update:
+    path:     /{id}/update
+    defaults: { _controller: "KebabCaisseBundle:Perissable:update" }
+    requirements: { _method: post|put }
+
+perissable_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "KebabCaisseBundle:Perissable:delete" }
+    requirements: { _method: post|delete }

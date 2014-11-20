@@ -1,0 +1,121 @@
+<?php
+
+namespace Kebab\CaisseBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Perissable
+ *
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="Kebab\CaisseBundle\Entity\PerissableRepository")
+ */
+class Perissable
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="Nom", type="string", length=255)
+     */
+    private $nom;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="DatePreremption", type="date")
+     */
+    private $datePreremption;
+    
+    /**
+    * @ORM\ManyToOne(targetEntity="Kebab\CaisseBundle\Entity\Achat")
+    * @ORM\JoinColumn(nullable=false)
+    */
+    private $achat;
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set nom
+     *
+     * @param string $nom
+     * @return Perissable
+     */
+    public function setNom($nom)
+    {
+        $this->nom = $nom;
+
+        return $this;
+    }
+
+    /**
+     * Get nom
+     *
+     * @return string 
+     */
+    public function getNom()
+    {
+        return $this->nom;
+    }
+
+    /**
+     * Set datePreremption
+     *
+     * @param \DateTime $datePreremption
+     * @return Perissable
+     */
+    public function setDatePreremption($datePreremption)
+    {
+        $this->datePreremption = $datePreremption;
+
+        return $this;
+    }
+
+    /**
+     * Get datePreremption
+     *
+     * @return \DateTime 
+     */
+    public function getDatePreremption()
+    {
+        return $this->datePreremption;
+    }
+
+    /**
+     * Set achat
+     *
+     * @param \Kebab\CaisseBundle\Entity\Achat $achat
+     * @return Perissable
+     */
+    public function setAchat(\Kebab\CaisseBundle\Entity\Achat $achat)
+    {
+        $this->achat = $achat;
+
+        return $this;
+    }
+
+    /**
+     * Get achat
+     *
+     * @return \Kebab\CaisseBundle\Entity\Achat 
+     */
+    public function getAchat()
+    {
+        return $this->achat;
+    }
+}

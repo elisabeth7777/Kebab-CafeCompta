@@ -1,0 +1,54 @@
+salaire:
+    path:     /
+    defaults: { _controller: "KebabComptaBundle:Salaire:index" }
+
+salaire_choix:
+    path:     /choix-tableau
+    defaults: { _controller: "KebabComptaBundle:Salaire:choix" }
+    
+salaire_charges_mensuelles:
+    path:     /charges-mensuelles
+    defaults: { _controller: "KebabComptaBundle:Salaire:chargesM" }
+
+salaire_charges_trimestrielles:
+    path:     /charges-trimestrielles
+    defaults: { _controller: "KebabComptaBundle:Salaire:chargesT" }
+
+salaire_charges_annuelles:
+    path:     /charges-annuelles
+    defaults: { _controller: "KebabComptaBundle:Salaire:chargesA" }
+    
+salaire_salaires_annuelles:
+    path:     /salaires-annuelles
+    defaults: { _controller: "KebabComptaBundle:Salaire:salairesMTotal" }
+    
+salaire_salaires_annuelles:
+    path:     /salaires-annuelles
+    defaults: { _controller: "KebabComptaBundle:Salaire:salairesMSalarie" } 
+    
+salaire_show:
+    path:     /{id}/show
+    defaults: { _controller: "KebabComptaBundle:Salaire:show" }
+
+salaire_new:
+    path:     /new
+    defaults: { _controller: "KebabComptaBundle:Salaire:new" }
+
+salaire_create:
+    path:     /create
+    defaults: { _controller: "KebabComptaBundle:Salaire:create" }
+    requirements: { _method: post }
+
+salaire_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "KebabComptaBundle:Salaire:edit" }
+
+salaire_update:
+    path:     /{id}/update
+    defaults: { _controller: "KebabComptaBundle:Salaire:update" }
+    requirements: { _method: post|put }
+
+salaire_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "KebabComptaBundle:Salaire:delete" }
+    requirements: { _method: post|delete }

@@ -1,0 +1,88 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Taux</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Ursaffdepl</th>
+                <td>{{ entity.uRSAFFDEPL }}</td>
+            </tr>
+            <tr>
+                <th>Ursaffplfd</th>
+                <td>{{ entity.uRSAFFPLFD }}</td>
+            </tr>
+            <tr>
+                <th>Ursafffnal</th>
+                <td>{{ entity.uRSAFFFNAL }}</td>
+            </tr>
+            <tr>
+                <th>Csg</th>
+                <td>{{ entity.cSG }}</td>
+            </tr>
+            <tr>
+                <th>rds</th>
+                <td>{{ entity.rDS }}</td>
+            </tr>            
+            <tr>
+                <th>Lodeom</th>
+                <td>{{ entity.lODEOM }}</td>
+            </tr>
+            <tr>
+                <th>Fillon</th>
+                <td>{{ entity.fILLON }}</td>
+            </tr>
+            <tr>
+                <th>Chomage</th>
+                <td>{{ entity.cHOMAGE }}</td>
+            </tr>
+            <tr>
+                <th>Ags</th>
+                <td>{{ entity.aGS }}</td>
+            </tr>
+            <tr>
+                <th>Retn_cadre</th>
+                <td>{{ entity.rETNCADRE }}</td>
+            </tr>
+            <tr>
+                <th>Agffn_cadre</th>
+                <td>{{ entity.aGFFNCADRE }}</td>
+            </tr>
+            <tr>
+                <th>Taxeappr</th>
+                <td>{{ entity.tAXEAPPR }}</td>
+            </tr>
+            <tr>
+                <th>Taxeprof</th>
+                <td>{{ entity.tAXEPROF }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ entity.type }}</td>
+            </tr>
+            <tr>
+                <th>Annee</th>
+                <td>{{ entity.annee|date('Y-m-d H:i:s') }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('taux') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('taux_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

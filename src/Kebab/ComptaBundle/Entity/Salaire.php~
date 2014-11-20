@@ -1,0 +1,95 @@
+<?php
+
+namespace Kebab\ComptaBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Salaire
+ *
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="Kebab\ComptaBundle\Entity\SalaireRepository")
+ */
+class Salaire
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Kebab\ComptaBundle\Entity\Salarie")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $salarie;
+    
+    /**
+
+     * @var \DateTime
+
+     *
+
+     * @ORM\Column(name="Date", type="date")
+
+     */    
+    private $date;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="SalaireNet", type="decimal", nullable=true)
+     */
+    private $salaireNet;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="Avances", type="decimal", nullable=true)
+     */
+    private $avances;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="SalaireBase", type="decimal", nullable=true)
+     */
+    private $salaireBase;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="RepasAvantage", type="decimal", nullable=true)
+     */
+    private $repasAvantage;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="Absences", type="decimal", nullable=true)
+     */
+    private $absences;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="SalaireBrut", type="decimal", nullable=true)
+     */
+    private $salaireBrut;
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+ 
+}

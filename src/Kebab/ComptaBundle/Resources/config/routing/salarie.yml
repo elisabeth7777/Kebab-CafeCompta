@@ -1,0 +1,30 @@
+salarie:
+    path:     /
+    defaults: { _controller: "KebabComptaBundle:Salarie:index" }
+
+salarie_show:
+    path:     /{id}/show
+    defaults: { _controller: "KebabComptaBundle:Salarie:show" }
+
+salarie_new:
+    path:     /new
+    defaults: { _controller: "KebabComptaBundle:Salarie:new" }
+
+salarie_create:
+    path:     /create
+    defaults: { _controller: "KebabComptaBundle:Salarie:create" }
+    requirements: { _method: post }
+
+salarie_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "KebabComptaBundle:Salarie:edit" }
+
+salarie_update:
+    path:     /{id}/update
+    defaults: { _controller: "KebabComptaBundle:Salarie:update" }
+    requirements: { _method: post|put }
+
+salarie_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "KebabComptaBundle:Salarie:delete" }
+    requirements: { _method: post|delete }

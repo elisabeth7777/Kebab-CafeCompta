@@ -1,0 +1,7 @@
+parameters:
+#    kebab_caisse.example.class: Kebab\CaisseBundle\Example
+
+services:
+#    kebab_caisse.example:
+#        class: %kebab_caisse.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

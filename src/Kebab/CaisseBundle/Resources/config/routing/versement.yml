@@ -1,0 +1,30 @@
+versement:
+    path:     /
+    defaults: { _controller: "KebabCaisseBundle:Versement:index" }
+
+versement_show:
+    path:     /{id}/show
+    defaults: { _controller: "KebabCaisseBundle:Versement:show" }
+
+versement_new:
+    path:     /new
+    defaults: { _controller: "KebabCaisseBundle:Versement:new" }
+
+versement_create:
+    path:     /create
+    defaults: { _controller: "KebabCaisseBundle:Versement:create" }
+    requirements: { _method: post }
+
+versement_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "KebabCaisseBundle:Versement:edit" }
+
+versement_update:
+    path:     /{id}/update
+    defaults: { _controller: "KebabCaisseBundle:Versement:update" }
+    requirements: { _method: post|put }
+
+versement_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "KebabCaisseBundle:Versement:delete" }
+    requirements: { _method: post|delete }

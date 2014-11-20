@@ -1,0 +1,73 @@
+{% extends '::base.html.twig' %}
+{% block title %}{{ entity.salarie.nom|upper }} {{ entity.salarie.prenom|capitalize }} {% if entity.date %}- {{ entity.date|localizeddate('none', 'none', 'fr', null, "MMMY")|capitalize  }}{% endif %} {% endblock %}
+{% block sub_title -%}Détails salaire{% endblock %}
+{% block new_breadcrumb %}
+<li>
+    <i class="fa fa-angle-right"></i>
+        <a href="{{ path('salaire') }}">Salaire</a>
+</li>
+<li>
+    <i class="fa fa-angle-right"></i>
+        <a href="{{ path('salaire_show', { 'id': entity.id }) }}">{{ entity.salarie.nom|upper }} {% if entity.date %}- {{ entity.date|localizeddate('none', 'none', 'fr', null, "MM/Y") }}{% endif %}/a>
+</li>
+{% endblock %} 
+{% block body -%}
+        <p><a class="btn btn-lg btn-primary" href="{{ path('salaire_new') }}"><i class="fa fa-plus-circle"></i> Ajouter un salaire</a></p>
+<div class="col-md-6">
+    <table class="table table-hover">
+        <tbody>
+            <tr>
+                <th>Salarié</th>
+                <td>{{ entity.salarie.nom|upper }} {{ entity.salarie.prenom|capitalize }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{% if entity.salarie.type == 'PRO' %}Contrat Pro{% elseif entity.salarie.type == 'NOR'  %}Contrat Normal{% endif %}</td>
+            </tr>            
+            <tr>
+                <th>Date</th>
+                <td>{% if entity.date %}{{ entity.date|date('M-Y') }}{% endif%}</td>
+            </tr>
+             
+            <tr>
+                <th>Salaire Net</th>
+                <td>{{ entity.salaireNet }}</td>
+            </tr>
+            <tr>
+                <th>Avances</th>
+                <td>{{ entity.avances }}</td>
+            </tr>
+            <tr>
+                <th>Salaire Base</th>
+                <td>{{ entity.salaireBase }}</td>
+            </tr>
+            <tr>
+                <th>Repas Avantage</th>
+                <td>{{ entity.repasAvantage }}</td>
+            </tr>
+            <tr>
+                <th>Absences</th>
+                <td>- {{ entity.absences }}</td>
+            </tr>
+            <tr>
+                <th>Salaire Brut</th>
+                <td>{{ entity.salaireBrut }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+            <div class="col-md-12"
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('salaire') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('salaire_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+                </ul></div>
+{% endblock %}

@@ -1,0 +1,144 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Ventes {{ date|localizeddate('none', 'none', 'fr', null, "MMMM-Y")|capitalize  }}
+<button class="icon-btn" onclick="window.print()"><i class="icon-printer"></i></button>
+{% endblock %}
+{% block new_breadcrumb %}
+<li>
+    <i class="fa fa-angle-right"></i>
+        <a href="{{ path('vente') }}">Liste Ventes</a>
+</li>
+{% endblock %} 
+{% block body -%}
+    <table class="table table-responsive table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Date</th>
+                {% for article in articles %}
+                    <th>{{ article.codeCpte }}</th>
+                {% endfor %}                
+                <th>Especes</th>
+                <th>CB</th>
+                <th>CH</th>
+                <th class="text-primary">Total</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% set Total_totaux = 0 %}
+        {% set Total_701010 = 0 %}
+        {% set Total_701020 = 0 %}
+        {% set Total_701030 = 0 %}
+        {% set Total_707100 = 0 %}
+        {% set Total_707200 = 0 %}
+        {% set Total_especes = 0 %}
+        {% set Total_cd = 0 %}
+        {% set Total_ch = 0 %}
+        {% for entity in entities %}
+            {% for articlevente in entity.articleventes %}   
+                {% if articlevente.article.codecpte == 701010 %}
+                    {% set Total_701010 = Total_701010 + articlevente.montant %}
+                {% elseif articlevente.article.codecpte == 701020 %}
+                    {% set Total_701020 = Total_701020 + articlevente.montant %}
+                {% elseif articlevente.article.codecpte == 701030 %} 
+                    {% set Total_701030 = Total_701030 + articlevente.montant %}
+                {% elseif articlevente.article.codecpte == 707100 %}
+                    {% set Total_707100 = Total_707100 + articlevente.montant %}
+                {% elseif articlevente.article.codecpte == 707200 %}
+                    {% set Total_707200 = Total_707200 + articlevente.montant %}
+                {% endif %}    
+            {% endfor %} 
+            <tr>
+{#                <td><a href="{{ path('vente_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>#}
+            <th>{% if entity.date %}{{ entity.date|localizeddate('none', 'none', 'fr', null, "dd")|upper  }}  <cite class="jour">{{ entity.date|localizeddate('none', 'none', 'fr', null, "cccc")|capitalize }} </cite>{% endif %}</th>
+                {% for article in articles %}
+                    {% set is_article = 0 %}
+                    {% for articlevente in entity.articleventes %}   
+                        {% if article.codecpte == articlevente.article.codecpte %}
+                            {% set is_article = 1 %}
+                            <td>{{ articlevente.montant }}</td>
+                        {% endif %}   
+                    {% endfor %} 
+                    {% if is_article == 0 %}<td></td>{% endif %}
+                {% endfor %}
+                {% set total = entity.especes + entity.cB + entity.cH %}
+                <td>{{ entity.especes }}</td>
+                <td>{{ entity.cB }}</td>
+                <td>{{ entity.cH }}</td>
+                <td class="text-primary">{{ total }}</td>
+                {% set Total_especes = Total_especes +  entity.especes %}
+                {% set Total_cd = Total_cd + entity.cB %}
+                {% set Total_ch = Total_ch + entity.cH %}
+                {% set Total_totaux = Total_totaux + total %}
+            </tr>
+        {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr class="active">
+                <th>Total TTC</th>
+                <td>{{ Total_701010 }}</td>
+                <td>{{ Total_701020 }}</td>
+                <td>{{ Total_701030 }}</td>
+                <td>{{ Total_707100 }}</td>
+                <td>{{ Total_707200 }}</td>
+                <td>{{ Total_especes }}</td>
+                <td>{{ Total_cd }}</td>
+                <td>{{ Total_ch }}</td>
+                <td>{{ Total_totaux }}</td>
+            </tr>        
+            <tr class="active">
+                {% set Total_ht_701010 = (Total_701010/1.021)|round(2, 'common') %}
+                {% set Total_ht_701020 = (Total_701020/1.021)|round(2, 'common') %}
+                {% set Total_ht_701030 = (Total_701030/1.021)|round(2, 'common') %}
+                {% set Total_ht_707100 = (Total_707100/1.021)|round(2, 'common') %}
+                {% set Total_ht_707200 = (Total_707200/1.085)|round(2, 'common') %}
+                <th>Total H.T</th>
+                <td>{{ Total_ht_701010 }}</td>
+                <td>{{ Total_ht_701020  }}</td>
+                <td>{{ Total_ht_701030  }}</td>
+                <td>{{ Total_ht_707100  }}</td>
+                <td>{{ Total_ht_707200  }}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>{{ Total_ht_701010 + Total_ht_701020 + Total_ht_701030 + Total_ht_707100 + Total_ht_707200}}</td>
+            </tr>
+            <tr class="active">
+                {% set Total_TVA_701010 = (Total_ht_701010*(2.1/100))|round(2, 'common') %}
+                {% set Total_TVA_701020 = (Total_ht_701020*(2.1/100))|round(2, 'common') %}
+                {% set Total_TVA_701030 = (Total_ht_701030*(2.1/100))|round(2, 'common') %}
+                {% set Total_TVA_707100 = (Total_ht_707100*(2.1/100))|round(2, 'common') %}
+                {% set Total_TVA_707200 = (Total_ht_707200*(8.5/100))|round(2, 'common') %}                
+                <th>TVA 2,10%</th>
+                <td>{{ Total_TVA_701010 }}</td>
+                <td>{{ Total_TVA_701020 }}</td>
+                <td>{{ Total_TVA_701030 }}</td>
+                <td>{{ Total_TVA_707100 }}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>{{ Total_TVA_701010 + Total_TVA_701020 + Total_TVA_701030 + Total_TVA_707100}}</td>
+            </tr>
+            <tr class="active">
+                <th>TVA 8,50%</th>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>{{ Total_TVA_707200 }}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>{{ Total_TVA_707200 }}</td>
+            </tr>
+        </tfoot>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('vente_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+    {% endblock %}

@@ -1,0 +1,16 @@
+{% block date_widget -%}
+    {% if widget == 'single_text' %}
+        {{- block('form_widget_simple') -}}
+    {% else %}
+        <div {{ block('widget_container_attributes') }}>
+            <div class="datetime_widget">
+                {% set date_pattern = '<span style="display: none;">{{ day }}{{ month }}</span> {{ year }}' %}
+                {{- date_pattern|replace({
+                '{{ year }}':  form_widget(form.year),
+                '{{ month }}': form_widget(form.month),
+                '{{ day }}':   form_widget(form.day),
+            })|raw -}}
+            </div>
+        </div>
+    {% endif %}
+{%- endblock date_widget %}{# empty Twig template #}

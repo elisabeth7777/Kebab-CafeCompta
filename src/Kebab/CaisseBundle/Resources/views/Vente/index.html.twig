@@ -1,0 +1,64 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+
+<p><a class="btn btn-lg btn-primary" href="{{ path('vente_new') }}"><i class="fa fa-plus-circle"></i> Ajouter une vente</a></p>    
+    <h1>Liste des ventes</h1>
+    <table class="table table-responsive table-bordered table-striped table-hover">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Date</th>
+                {% for article in articles %}
+                    <th>{{ article.codeCpte }}</th>
+                {% endfor %}                
+                <th>Especes</th>
+                <th>CB</th>
+                <th>CH</th>
+                <th class="text-primary">Total Vente</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('vente_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{% if entity.date %}{{ entity.date|date('d-m-Y') }}{% endif %}</td>
+                {% for article in articles %}
+                    {% set is_article = 0 %}
+                    {% for articlevente in entity.articleventes %}   
+                        {% if article.codecpte == articlevente.article.codecpte %}
+                            {% set is_article = 1 %}
+                            <td>{{ articlevente.montant }}</td>
+                        {% endif %}
+                    {% endfor %} 
+                    {% if is_article == 0 %}<td></td>{% endif %}
+                {% endfor %}
+                {% set total = entity.especes + entity.cB + entity.cH %}
+                <td>{{ entity.especes }}</td>
+                <td>{{ entity.cB }}</td>
+                <td>{{ entity.cH }}</td>
+                <td class="text-primary">{{ total }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('vente_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('vente_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('vente_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+    {% endblock %}

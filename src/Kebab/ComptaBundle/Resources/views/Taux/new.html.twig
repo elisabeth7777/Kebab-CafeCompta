@@ -1,0 +1,26 @@
+{% extends '::base.html.twig' %}
+{% form_theme form 'KebabComptaBundle:Form:year.html.twig' %}
+{% block title %}Taux Charges{% endblock %}
+{% block sub_title -%}Ajouter des taux {% endblock %}
+{% block new_breadcrumb %}
+<li>
+    <i class="fa fa-angle-right"></i>
+        <a href="{{ path('taux') }}">Taux</a>
+</li>
+<li>
+    <i class="fa fa-angle-right"></i>
+        <a href="{{ path('taux_new') }}">Ajouter Taux Annuels</a>
+</li>
+{% endblock %} 
+{% block body -%}
+
+    {{ form(form) }}
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('taux') }}">
+            Back to the list
+        </a>
+    </li>
+</ul>
+{% endblock %}

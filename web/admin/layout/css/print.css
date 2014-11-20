@@ -1,0 +1,92 @@
+ul#page-breadcrumb breadcrumb{
+    display: none;
+}
+ul{
+    display: none;
+}
+/*cite.jour{
+    display: none;
+}*/
+body {
+/*    height: 10cm;
+    max-height: 15cm;*/
+    width: 21cm;
+    /*margin: 0px 0px 0px 0px;*/
+    font-size: 14pt; 
+    margin-bottom: 0px;
+    margin-top: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px; 
+    font-family: "Open Sans", sans-serif!important;
+}
+button.icon-btn {
+    display: none;
+}
+div.col-md-12{
+    margin-bottom: 0px;
+    margin-top: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+h3.page-title{
+    text-align: center;
+    font-size: 20pt;
+    margin: 0px 0px 0px 0px;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+.table{
+    margin-bottom: 0px!important;
+    margin-top: 20px!important;
+    padding-top: 0px!important;
+    padding-bottom: 0px!important;
+/*    border: 3px solid #ddd;*/
+
+}
+th, tbody, table, tr, td {
+    padding: 2px !important;
+    
+}
+div.page-logo, div.page-footer{
+    display: none;
+}
+td.text-primary{
+    color: #428bca!important;
+}
+/*.table tr.active{
+    color: #ddd!important;
+}*/
+/*.table>thead>tr>td.active, .table>tbody>tr>td.active, .table>tfoot>tr>td.active, .table>thead>tr>th.active, .table>tbody>tr>th.active, .table>tfoot>tr>th.active, .table>thead>tr.active>td, .table>tbody>tr.active>td, .table>tfoot>tr.active>td, .table>thead>tr.active>th, .table>tbody>tr.active>th, .table>tfoot>tr.active>th {
+background-color: #ddd!important;
+}*/
+.table > thead > tr > td.active,
+.table > thead > tr > th.active, .table > thead > tr.active > td, .table > thead > tr.active > th,
+.table > tbody > tr > td.active,
+.table > tbody > tr > th.active,
+.table > tbody > tr.active > td,
+.table > tbody > tr.active > th,
+.table > tfoot > tr > td.active,
+.table > tfoot > tr > th.active,
+.table > tfoot > tr.active > td,
+.table > tfoot > tr.active > th {
+  background-color: #ECECEC!important;
+  /*color: #ddd!important;*/
+}
+/*.table-hover > tbody > tr > td.active:hover,
+.table-hover > tbody > tr > th.active:hover, .table-hover > tbody > tr.active:hover > td, .table-hover > tbody > tr.active:hover > th {
+  background-color: #92bce0;
+}
+table{
+   margin: 0px 0px 0px 0px; 
+}
+h3 {
+    margin: 0px 0px 0px 0px;
+    font-size: 6pt;
+    display: none;
+}*/
+/*td{
+    font-size: 8pt; 
+    margin: 0px
+}*/

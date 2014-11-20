@@ -1,0 +1,30 @@
+taux:
+    path:     /
+    defaults: { _controller: "KebabComptaBundle:Taux:index" }
+
+taux_show:
+    path:     /{id}/show
+    defaults: { _controller: "KebabComptaBundle:Taux:show" }
+
+taux_new:
+    path:     /new
+    defaults: { _controller: "KebabComptaBundle:Taux:new" }
+
+taux_create:
+    path:     /create
+    defaults: { _controller: "KebabComptaBundle:Taux:create" }
+    requirements: { _method: post }
+
+taux_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "KebabComptaBundle:Taux:edit" }
+
+taux_update:
+    path:     /{id}/update
+    defaults: { _controller: "KebabComptaBundle:Taux:update" }
+    requirements: { _method: post|put }
+
+taux_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "KebabComptaBundle:Taux:delete" }
+    requirements: { _method: post|delete }

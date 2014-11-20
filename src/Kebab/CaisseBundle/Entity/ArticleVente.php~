@@ -1,0 +1,75 @@
+<?php
+
+namespace Kebab\CaisseBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * ArticleVente
+ *
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="Kebab\CaisseBundle\Entity\ArticleVenteRepository")
+ */
+class ArticleVente
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Kebab\CaisseBundle\Entity\Article")
+     * @ORM\JoinColumn(nullable=false)
+     */   
+    private $article;
+    
+  /**
+   * @ORM\ManyToOne(targetEntity="OCKebab\CaisseBundle\Entity\Vente")
+   * @ORM\JoinColumn(nullable=false)
+   */    
+    private $vente;
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="Montant", type="decimal")
+     */
+    private $montant;
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set montant
+     *
+     * @param string $montant
+     * @return ArticleVente
+     */
+    public function setMontant($montant)
+    {
+        $this->montant = $montant;
+
+        return $this;
+    }
+
+    /**
+     * Get montant
+     *
+     * @return string 
+     */
+    public function getMontant()
+    {
+        return $this->montant;
+    }
+}

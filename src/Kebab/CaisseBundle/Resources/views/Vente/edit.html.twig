@@ -1,0 +1,112 @@
+{% extends '::base.html.twig' %}
+{% form_theme edit_form 'KebabCaisseBundle:Form:fields.html.twig' %}
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('global/plugins/bootstrap-datetimepicker/css/datetimepicker.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('global/plugins/bootstrap-datepicker/css/datepicker3.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('global/plugins/select2/select2.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('global/plugins/bootstrap-select/bootstrap-select.min.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('global/plugins/bootstrap-fileinput/bootstrap-fileinput.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('global/plugins/bootstrap-switch/css/bootstrap-switch.min.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('global/plugins/jquery-tags-input/jquery.tagsinput.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('global/plugins/bootstrap-markdown/css/bootstrap-markdown.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('global/plugins/typeahead/typeahead.css') }}">    
+{% endblock %}
+{% block body -%}
+    <h1>Vente edit</h1>
+    
+    {{ form(edit_form) }}
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('vente') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}
+{% block javascript_others %}
+<script type="text/javascript">
+  $(document).ready(function() {
+    // On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.
+    var $container = $('div#kebab_caissebundle_vente_articleventes');
+
+    // On ajoute un lien pour ajouter une nouvelle catégorie
+    var $addLink = $('<a href="#" id="add_category" class="btn btn-default">Ajouter un article</a>');
+    $container.append($addLink);
+
+    // On ajoute un nouveau champ à chaque clic sur le lien d'ajout.
+    $addLink.click(function(e) {
+      addCategory($container);
+      e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+      return false;
+    });
+
+    // On définit un compteur unique pour nommer les champs qu'on va ajouter dynamiquement
+    var index = $container.find(':input').length;
+
+    // On ajoute un premier champ automatiquement s'il n'en existe pas déjà un (cas d'une nouvelle annonce par exemple).
+    if (index == 0) {
+        for(i=0; i<5; i++){
+            addCategory($container);
+        }
+    } else {
+      // Pour chaque catégorie déjà existante, on ajoute un lien de suppression
+      $container.children('div').each(function() {
+        addDeleteLink($(this));
+      });
+    }
+$(".mask_currency").maskMoney({allowZero:true});
+    // La fonction qui ajoute un formulaire Categorie
+    function addCategory($container) {
+      // Dans le contenu de l'attribut « data-prototype », on remplace :
+      // - le texte "__name__label__" qu'il contient par le label du champ
+      // - le texte "__name__" qu'il contient par le numéro du champ
+      var $prototype = $($container.attr('data-prototype').replace(/__name__label__/g, 'Article n°' + (index+1))
+          .replace(/__name__/g, index));
+
+      // On ajoute au prototype un lien pour pouvoir supprimer la catégorie
+      addDeleteLink($prototype);
+
+      // On ajoute le prototype modifié à la fin de la balise <div>
+      $container.append($prototype);
+
+      // Enfin, on incrémente le compteur pour que le prochain ajout se fasse avec un autre numéro
+      index++;
+    }
+
+    // La fonction qui ajoute un lien de suppression d'une catégorie
+    function addDeleteLink($prototype) {
+      // Création du lien
+      $deleteLink = $('<a href="#" class="btn btn-danger">Supprimer</a>');
+
+      // Ajout du lien
+      $prototype.append($deleteLink);
+
+      // Ajout du listener sur le clic du lien
+      $deleteLink.click(function(e) {
+        $prototype.remove();
+        e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+        return false;
+      });
+    }
+  });
+</script> 
+
+{% endblock %} 
+{% block js_link %}
+    <script src="{{ asset('admin/layout/scripts/jquery.maskMoney.js') }}"></script>
+    <script src="{{ asset('admin/pages/scripts/components-pickers.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('global/plugins/bootstrap-select/bootstrap-select.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('global/plugins/select2/select2.min.js') }}"></script>
+    <script src="{{ asset('admin/pages/scripts/components-form-tools.js') }}"></script>
+    <script type="text/javascript">        
+        $(".mask_currency").maskMoney({allowZero:true});
+    </script>
+{#    <script src="{{ asset('admin/pages/scripts/components-dropdowns.js') }}"></script>#}
+{% endblock %}
+{% block javascript %}
+    ComponentsPickers.init(); ComponentsFormTools.init();
+ {% endblock %}

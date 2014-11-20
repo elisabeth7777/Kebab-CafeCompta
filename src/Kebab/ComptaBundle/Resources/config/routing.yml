@@ -1,0 +1,11 @@
+kebabComptaBundle_salaire:
+        resource: "@KebabComptaBundle/Resources/config/routing/salaire.yml"
+        prefix:   /salaire
+        
+kebabComptaBundle_salarie:
+        resource: "@KebabComptaBundle/Resources/config/routing/salarie.yml"
+        prefix:   /salarie
+        
+KebabComptaBundle_taux:
+     resource: "@KebabComptaBundle/Resources/config/routing/taux.yml"
+     prefix:   /taux

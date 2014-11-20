@@ -1,0 +1,30 @@
+fondcaisse:
+    path:     /
+    defaults: { _controller: "KebabCaisseBundle:FondCaisse:index" }
+
+fondcaisse_show:
+    path:     /{id}/show
+    defaults: { _controller: "KebabCaisseBundle:FondCaisse:show" }
+
+fondcaisse_new:
+    path:     /new
+    defaults: { _controller: "KebabCaisseBundle:FondCaisse:new" }
+
+fondcaisse_create:
+    path:     /create
+    defaults: { _controller: "KebabCaisseBundle:FondCaisse:create" }
+    requirements: { _method: post }
+
+fondcaisse_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "KebabCaisseBundle:FondCaisse:edit" }
+
+fondcaisse_update:
+    path:     /{id}/update
+    defaults: { _controller: "KebabCaisseBundle:FondCaisse:update" }
+    requirements: { _method: post|put }
+
+fondcaisse_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "KebabCaisseBundle:FondCaisse:delete" }
+    requirements: { _method: post|delete }

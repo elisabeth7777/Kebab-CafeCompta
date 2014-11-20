@@ -1,0 +1,368 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Charges {{ date|localizeddate('none', 'none', 'fr', null, "MMMM-Y")|capitalize  }}{% endblock %}
+{% block sub_title -%}Liste de salaire{% endblock %}
+{% block new_breadcrumb %}
+<li>
+    <i class="fa fa-angle-right"></i>
+        <a href="{{ path('salaire') }}">Salaire</a>
+</li>
+{% endblock %} 
+{% block body -%}
+{#    <p><a class="btn btn-lg btn-primary" href="{{ path('salaire_new') }}"><i class="fa fa-plus-circle"></i> Ajouter un nouveau client</a></p>
+ #}
+<div class="panel-group accordion" id="accordion3">
+    {% for entity in entities %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                    <h4 class="panel-title">
+                    <a class="accordion-toggle accordion-toggle-styled" data-toggle="collapse" data-parent="#accordion3" href="#collapse_{{ entity.id}}">
+                    {{ entity.salarie.nom|upper }} {{ entity.salarie.prenom|capitalize }}</a>
+                    </h4>
+            </div>
+            <div id="collapse_{{ entity.id}}" class="panel-collapse in">
+                <div class="panel-body">
+                    <table class="table table-hover table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>PART SALARIALE</th>
+                                <th>PART PATRONALE</th>
+                                <th>TOTAL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <tr>
+                                {% set UESAFFS = (entity.salaireBrut * (sal.uRSAFFDEPL/100)) %}
+                                {% set UESAFFP = (entity.salaireBrut * (pat.uRSAFFDEPL/100)) %}
+                                <th>UESAFF DPL</th>
+                                <td><p class="tooltips" data-original-title="salaire-brut * (0.85/100)">{{ UESAFFS|round(2, 'common') }} €</p></td>
+                                <td><p class="tooltips" data-original-title="salaire-brut * (22.4/100)">{{ UESAFFP|round(2, 'common') }} €</p></td>
+                                <td><p class="tooltips" data-original-title="uesaff-salarial + uesaff-patronal">{{ ( UESAFFS + UESAFFP) |round(2, 'common')}} €</p></td>
+                            </tr>
+                            <tr>
+                                {% set PLFDS = (entity.salaireBrut * (sal.uRSAFFPLFD/100)) %}
+                                {% set PLFDP = (entity.salaireBrut * (pat.uRSAFFPLFD/100)) %}
+                                <th>URSAFF PLFD</th>
+                                <td>{{ PLFDS|round(2, 'common') }} €</td>
+                                <td>{{ PLFDP|round(2, 'common') }} €</td>
+                                <td>{{ ( PLFDS + PLFDP) |round(2, 'common')}} €</td>
+                            </tr>
+                            <tr>
+                                {% set FNALS = (entity.salaireBrut * (sal.uRSAFFFNAL/100)) %}
+                                {% set FNALP = (entity.salaireBrut * (pat.uRSAFFFNAL/100)) %}
+                                <th>URSAFF FNAL</th>
+                                <td>{{ FNALS|round(2, 'common') }} €</td>
+                                <td>{{ FNALP|round(2, 'common') }} €</td>
+                                <td>{{ (FNALP + FNALS) |round(2, 'common') }} €</td>
+                            </tr>
+                            <tr>
+                                {% set RDSS = (entity.salaireBrut * (sal.cSG/100) * (sal.rDS/100)) %}
+                                {% set RDSP = (entity.salaireBrut * (pat.cSG/100) * (pat.rDS/100)) %}
+                                <th>CSG RDS</th>
+                                <td>{{ RDSS |round(2, 'common') }} €</td>
+                                <td>{{ RDSP |round(2, 'common') }} €</td>
+                                <td>{{( RDSS + RDSP )|round(2, 'common')}} €</td>
+                            </tr>
+                            <tr class="">
+                                {% if entity.salarie.type =='PRO' %}{% set LODEOMS = (entity.salaireBrut * (sal.fILLON /100)) %}{% else %}{% set LODEOMS = (entity.salaireBrut * (sal.lODEOM/100)) %}{% endif %}
+                                {% if entity.salarie.type =='PRO' %}{% set LODEOMP = (entity.salaireBrut * (pat.fILLON /100)) %}{% else %}{% set LODEOMP = (entity.salaireBrut * (pat.lODEOM/100)) %}{% endif %}
+                                <th>{% if entity.salarie.type =='PRO' %}FILLON{% else %}LODEOM{% endif %}</th>
+                                <td>{{ LODEOMS|round(2, 'common') }} €</td>
+                                <td>{{ LODEOMP|round(2, 'common') }} €</td>
+                                <td>{{(LODEOMP + LODEOMS) |round(2, 'common')}} €</td>
+                            </tr>
+                            <tr>
+                                {% set CHOMAGES = (entity.salaireBrut * (sal.cHOMAGE/100)) %}
+                                {% set CHOMAGEP = (entity.salaireBrut * (pat.cHOMAGE/100)) %}
+                                <th>CHOMAGE</th>
+                                <td>{{ CHOMAGES|round(2, 'common') }} €</td>
+                                <td>{{ CHOMAGEP |round(2, 'common') }} €</td>
+                                <td>{{ ( CHOMAGES + CHOMAGEP ) |round(2, 'common')}}</td>
+                            </tr>
+                            <tr>
+                                {% set AGSS = (entity.salaireBrut * (sal.aGS/100)) %}
+                                {% set AGSP = (entity.salaireBrut * (pat.aGS/100)) %}
+                                <th>AGS</th>
+                                <td>{{ AGSS|round(2, 'common') }} €</td>
+                                <td>{{ AGSP|round(2, 'common') }} €</td>
+                                <td>{{(AGSP + AGSS)|round(2, 'common')}} €</td>
+                            </tr>
+                            <tr class="text-primary">
+                                {% set TOTALUESAFFS = (UESAFFS + PLFDS + RDSS + CHOMAGES) %}
+                                {% set TOTALUESAFFP = (UESAFFP + PLFDP + FNALP + LODEOMP + CHOMAGEP + AGSP) %}
+                                {% set TOTALUESAFFT = ( TOTALUESAFFS + TOTALUESAFFP) %}
+                                <th>TOTAL URSAFF</th>
+                                <td>{{ TOTALUESAFFS|round(2, 'common') }} €</td>
+                                <td>{{ TOTALUESAFFP|round(2, 'common') }} €</td>
+                                <td>{{ TOTALUESAFFT|round(2, 'common')}} €</td>
+                            </tr>            
+                            <tr>
+                                <th colspan="4"></th>
+                            </tr>
+                            <tr>
+                                {% set RETS = (entity.salaireBrut * (sal.rETNCADRE/100)) %}
+                                {% set RETP = (entity.salaireBrut * (pat.rETNCADRE/100)) %}
+                                <th>RET N.CADRE</th>
+                                <td>{{ RETS|round(2, 'common') }} €</td>
+                                <td>{{ RETP|round(2, 'common') }} €</td>
+                                <td>{{ ( RETS + RETP) |round(2, 'common')}} €</td>
+                            </tr>
+                            <tr class="">
+                                {% set AGFFS = (entity.salaireBrut * (sal.aGFFNCADRE/100)) %}
+                                {% set AGFFP = (entity.salaireBrut * (pat.aGFFNCADRE/100)) %}
+                                <th>AGFF N.CADRE</th>
+                                <td>{{ AGFFS|round(2, 'common') }} €</td>
+                                <td>{{ AGFFP|round(2, 'common') }} €</td>
+                                <td>{{ ( AGFFS + AGFFP) |round(2, 'common')}} €</td>
+                            </tr>
+                            <tr class="text-primary">
+                                {% set TOTALIRCOMS = (RETS + AGFFS) %}
+                                {% set TOTALIRCOMP = (RETP + AGFFP) %}
+                                {% set TOTALIRCOMT = ( TOTALIRCOMS + TOTALIRCOMP) %}
+                                <th>TOTAL IRCOM</th>
+                                <td>{{ TOTALIRCOMS|round(2, 'common') }} €</td>
+                                <td>{{ TOTALIRCOMP|round(2, 'common') }} €</td>
+                                <td>{{ TOTALIRCOMT|round(2, 'common')}} €</td>
+                            </tr>
+                            <tr>
+                                <th colspan="4"></th>
+                            </tr>
+                            <tr class="text-primary">
+                                {% set APPRS = (entity.salaireBrut * (sal.tAXEAPPR/100)) %}
+                                {% set APPRP = (entity.salaireBrut * (pat.tAXEAPPR/100)) %}
+                                <th>TAXE APPR</th>
+                                <td>{{ APPRS|round(2, 'common') }} €</td>
+                                <td>{{ APPRP|round(2, 'common') }} €</td>
+                                <td>{{ (APPRP+APPRS)|round(2, 'common')}} €</td>
+                            </tr>
+                            <tr>
+                                <th colspan="4"></th>
+                            </tr>
+                            <tr class="text-primary">
+                                {% set PROFS = (entity.salaireBrut * (sal.tAXEPROF/100)) %}
+                                {% set PROFP = (entity.salaireBrut * (pat.tAXEPROF/100)) %}
+                                <th>TAXE PROF</th>
+                                <td>{{ PROFS|round(2, 'common') }} €</td>
+                                <td>{{ PROFP|round(2, 'common') }} €</td>
+                                <td>{{ ( PROFP + PROFS )|round(2, 'common')}} €</td>
+                            </tr>
+                            <tr>
+                                <th colspan="4"></th>
+                            </tr>
+                            <tr class="active">
+                                {% set TOTALCHGESS = (TOTALUESAFFS + TOTALIRCOMS) %}
+                                {% set TOTALCHGESP = (TOTALUESAFFP + TOTALIRCOMP + APPRP + PROFP) %}
+                                {% set TOTALCHGEST = ( TOTALCHGESS + TOTALCHGESP) %}
+                                <th>TOTAL CHGES</th>
+                                <td>{{ TOTALCHGESS|round(2, 'common') }} €</td>
+                                <td>{{ TOTALCHGESP|round(2, 'common') }} €</td>
+                                <td>{{ TOTALCHGEST|round(2, 'common')}} €</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>                  
+{% endfor %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                    <h4 class="panel-title">
+                    <a class="accordion-toggle accordion-toggle-styled" data-toggle="collapse" data-parent="#accordion3" href="#collapse_total">
+                    Total Gral</a>
+                    </h4>
+            </div>
+            <div id="collapse_total" class="panel-collapse in">
+                <div class="panel-body">
+                    <table class="table table-hover table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>PART SALARIALE</th>
+                                <th>PART PATRONALE</th>
+                                <th>TOTAL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <tr>
+                                {% set UESAFFS = 0 %}
+                                {% set UESAFFP = 0 %}
+                                {% for entity in entities %}
+                                    {% set UESAFFS = UESAFFS + (entity.salaireBrut * (sal.uRSAFFDEPL/100)) %}
+                                    {% set UESAFFP = UESAFFP + (entity.salaireBrut * (pat.uRSAFFDEPL/100)) %}
+                                {% endfor %}   
+                                <th>UESAFF DPL</th>
+                                <td>{{ UESAFFS|round(2, 'common') }} €</td>
+                                <td>{{ UESAFFP|round(2, 'common') }} €</td>
+                                <td>{{ ( UESAFFS + UESAFFP) |round(2, 'common')}} €</td>
+                            </tr>
+                           <tr>
+                                {% set PLFDS = 0 %}
+                                {% set PLFDP = 0 %}
+                                {% for entity in entities %}
+                                    {% set PLFDS = PLFDS + (entity.salaireBrut * (sal.uRSAFFPLFD/100)) %}
+                                    {% set PLFDP = PLFDP + (entity.salaireBrut * (pat.uRSAFFPLFD/100)) %}
+                                {% endfor %} 
+                                <th>URSAFF PLFD</th>
+                                <td>{{ PLFDS|round(2, 'common') }}</td>
+                                <td>{{ PLFDP|round(2, 'common') }}</td>
+                                <td>{{ ( PLFDS + PLFDP) |round(2, 'common')}}</td>
+                            </tr>
+                            <tr>
+                                {% set FNALS = 0 %}
+                                {% set FNALP = 0 %}
+                                {% for entity in entities %}
+                                    {% set FNALS = FNALS + (entity.salaireBrut * (sal.uRSAFFFNAL/100)) %}
+                                    {% set FNALP = FNALP + (entity.salaireBrut * (pat.uRSAFFFNAL/100)) %}
+                                {% endfor %} 
+                                <th>URSAFF FNAL</th>
+                                <td>{{ FNALS|round(2, 'common') }}</td>
+                                <td>{{ FNALP|round(2, 'common') }}</td>
+                                <td>{{ (FNALP+FNALS)|round(2, 'common') }}</td>
+                            </tr>
+                            <tr>
+                                {% set RDSS = 0 %}
+                                {% set RDSP = 0 %}
+                                {% for entity in entities %}
+                                    {% set RDSS = RDSS + (entity.salaireBrut * (sal.cSG/100) * (sal.rDS/100)) %}
+                                    {% set RDSP = RDSP + (entity.salaireBrut * (pat.cSG/100) * (pat.rDS/100)) %}
+                                {% endfor %} 
+                                <th>CSG RDS</th>
+                                <td>{{ RDSS |round(2, 'common') }}</td>
+                                <td>{{ RDSP |round(2, 'common') }}</td>
+                                <td>{{ (RDSS + RDSP)|round(2, 'common')}}</td>
+                            </tr>
+                            <tr class="">
+                                {% set LODEOMS = 0 %}
+                                {% set LODEOMP = 0 %}
+                                {% for entity in entities %}
+                                    {% if entity.salarie.type =='PRO' %}{% set LODEOMS = LODEOMS + ( entity.salaireBrut * (sal.fILLON/100)) %}{% else %}{% set LODEOMS = LODEOMS + (entity.salaireBrut * (sal.lODEOM /100)) %}{% endif %}
+                                    {% if entity.salarie.type =='PRO' %}{% set LODEOMP = LODEOMP + ( entity.salaireBrut * (pat.fILLON/100)) %}{% else %}{% set LODEOMP = LODEOMP + ( entity.salaireBrut * (pat.lODEOM /100)) %}{% endif %}
+                                {% endfor %} 
+                                <th>LODEOM</th>
+                                <td>{{ LODEOMS|round(2, 'common') }}</td>
+                                <td>{{ LODEOMP|round(2, 'common') }}</td>
+                                <td>{{( LODEOMP + LODEOMS )|round(2, 'common')}}</td>
+                            </tr>
+                            <tr>
+                                {% set CHOMAGES = 0 %}
+                                {% set CHOMAGEP = 0 %}
+                                {% for entity in entities %}
+                                    {% set CHOMAGES = CHOMAGES + (entity.salaireBrut * (sal.cHOMAGE/100)) %}
+                                    {% set CHOMAGEP = CHOMAGEP + (entity.salaireBrut * (pat.cHOMAGE/100)) %}
+                                {% endfor %} 
+                                <th>CHOMAGE</th>
+                                <td>{{ CHOMAGES|round(2, 'common') }}</td>
+                                <td>{{ CHOMAGEP |round(2, 'common') }}</td>
+                                <td>{{ ( CHOMAGES + CHOMAGEP ) |round(2, 'common')}}</td>
+                            </tr>
+                            <tr>
+                                {% set AGSP = 0 %}
+                                {% set AGSS = 0 %}
+                                {% for entity in entities %}
+                                    {% set AGSS = AGSS + (entity.salaireBrut * (sal.aGS/100)) %}
+                                    {% set AGSP = AGSP + (entity.salaireBrut * (pat.aGS/100)) %}
+                                {% endfor %} 
+                                <th>AGS</th>
+                                <td>{{ AGSS|round(2, 'common') }}</td>
+                                <td>{{ AGSP|round(2, 'common') }}</td>
+                                <td>{{ ( AGSP + AGSS )|round(2, 'common')}}</td>
+                            </tr>
+                            <tr class="text-primary">
+                                {% set TOTALUESAFFS = (UESAFFS + PLFDS + RDSS + CHOMAGES) %}
+                                {% set TOTALUESAFFP = (UESAFFP + PLFDP + FNALP + LODEOMP + CHOMAGEP + AGSP) %}                                
+                                {% set TOTALUESAFFT = ( TOTALUESAFFS + TOTALUESAFFP) %}
+                                <th>TOTAL URSAFF</th>
+                                <td>{{ TOTALUESAFFS|round(2, 'common') }}</td>
+                                <td>{{ TOTALUESAFFP|round(2, 'common') }}</td>
+                                <td>{{ TOTALUESAFFT|round(2, 'common')}}</td>
+                            </tr>            
+                            <tr>
+                                <th colspan="4"></th>
+                            </tr>
+                            <tr>
+                                {% set RETS = 0 %}
+                                {% set RETP = 0 %}
+                                {% for entity in entities %}
+                                    {% set RETS = RETS + (entity.salaireBrut * (sal.rETNCADRE/100)) %}
+                                    {% set RETP = RETP + (entity.salaireBrut * (pat.rETNCADRE/100)) %}
+                                {% endfor %} 
+                                <th>RET N.CADRE</th>
+                                <td>{{ RETS|round(2, 'common') }}</td>
+                                <td>{{ RETP|round(2, 'common') }}</td>
+                                <td>{{ ( RETS + RETP) |round(2, 'common')}}</td>
+                            </tr>
+                            <tr class="">
+                                {% set AGFFS = 0 %}
+                                {% set AGFFP = 0 %}
+                                {% for entity in entities %}
+                                    {% set AGFFS = AGFFS + (entity.salaireBrut * (sal.aGFFNCADRE/100)) %}
+                                    {% set AGFFP = AGFFP + (entity.salaireBrut * (pat.aGFFNCADRE/100)) %}
+                                {% endfor %} 
+                                <th>AGFF N.CADRE</th>
+                                <td>{{ AGFFS|round(2, 'common') }}</td>
+                                <td>{{ AGFFP|round(2, 'common') }}</td>
+                                <td>{{ ( AGFFS + AGFFP) |round(2, 'common')}}</td>
+                            </tr>
+                            <tr class="text-primary">
+                                {% set TOTALIRCOMS = (RETS + AGFFS) %}
+                                {% set TOTALIRCOMP = (RETP + AGFFP) %}
+                                {% set TOTALIRCOMT = ( TOTALIRCOMS + TOTALIRCOMP) %}
+                                <th>TOTAL IRCOM</th>
+                                <td>{{ TOTALIRCOMS|round(2, 'common') }}</td>
+                                <td>{{ TOTALIRCOMP|round(2, 'common') }}</td>
+                                <td>{{ TOTALIRCOMT|round(2, 'common')}}</td>
+                            </tr>
+                            <tr>
+                                <th colspan="4"></th>
+                            </tr>
+                            <tr class="text-primary">
+                                {% set APPRS = 0 %}
+                                {% set APPRP = 0 %}
+                                {% for entity in entities %}
+                                    {% set APPRS = APPRS + (entity.salaireBrut * (sal.tAXEAPPR/100)) %}
+                                    {% set APPRP = APPRP + (entity.salaireBrut * (pat.tAXEAPPR/100)) %}
+                                {% endfor %} 
+                                <th>TAXE APPR</th>
+                                <td>{{ APPRS|round(2, 'common') }}</td>
+                                <td>{{ APPRP|round(2, 'common') }}</td>
+                                <td>{{ ( APPRP + APPRS ) |round(2, 'common')}}</td>
+                            </tr>
+                            <tr>
+                                <th colspan="4"></th>
+                            </tr>
+                            <tr class="text-primary">
+                                {% set PROFS = 0 %}
+                                {% set PROFP = 0 %}
+                                {% for entity in entities %}
+                                    {% set PROFS = PROFS + (entity.salaireBrut * (sal.tAXEPROF/100)) %}
+                                    {% set PROFP = PROFP + (entity.salaireBrut * (pat.tAXEPROF/100)) %}
+                                {% endfor %} 
+                                <th>TAXE PROF</th>
+                                <td>{{ PROFS|round(2, 'common') }}</td>
+                                <td>{{ PROFP|round(2, 'common') }}</td>
+                                <td>{{ (PROFP + PROFS)|round(2, 'common')}}</td>
+                            </tr>
+                            <tr>
+                                <th colspan="4"></th>
+                            </tr>
+                            <tr class="active">
+                                {% set TOTALCHGESS = (TOTALUESAFFS + TOTALIRCOMS) %}
+                                {% set TOTALCHGESP = (TOTALUESAFFP + TOTALIRCOMP + APPRP + PROFP) %}
+                                {% set TOTALCHGEST = ( TOTALCHGESS + TOTALCHGESP) %}
+                                <th>TOTAL CHGES</th>
+                                <td>{{ TOTALCHGESS|round(2, 'common') }}</td>
+                                <td>{{ TOTALCHGESP|round(2, 'common') }}</td>
+                                <td>{{ TOTALCHGEST|round(2, 'common')}}</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div> 
+</div>
+    {% endblock %}

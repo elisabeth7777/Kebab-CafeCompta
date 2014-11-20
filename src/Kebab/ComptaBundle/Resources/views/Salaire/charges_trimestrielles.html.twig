@@ -1,0 +1,62 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}Salaire{% endblock %}
+{% block sub_title -%}Liste de salaire{% endblock %}
+{% block new_breadcrumb %}
+<li>
+    <i class="fa fa-angle-right"></i>
+        <a href="{{ path('salaire') }}">Salaire</a>
+</li>
+{% endblock %} 
+{% block body -%}
+    <p><a class="btn btn-lg btn-primary" href="{{ path('salaire_new') }}"><i class="fa fa-plus-circle"></i> Ajouter un nouveau client</a></p>
+    <table class="table table-hover table-bordered">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Salarié</th>
+                <th>Mois</th>
+                <th>Salaire Net</th>
+                <th>Avances</th>
+                <th>Salaire Base</th>
+                <th>Repas Avantage</th>
+                <th>Absences</th>
+                <th>Salaire Brut</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('salaire_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.salarie.nom }} {{ entity.salarie.prenom }}</td>
+                <td>{% if entity.date %}{{ entity.date|date('M-Y') }}{% endif%}</td>
+                <td>{{ entity.salaireNet }}</td>
+                <td>{{ entity.avances }}</td>
+                <td>{{ entity.salaireBase }}</td>
+                <td>{{ entity.repasAvantage }}</td>
+                <td>{{ entity.absences }}</td>
+                <td>{{ entity.salaireBrut }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('salaire_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('salaire_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('salaire_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+    {% endblock %}

@@ -1,0 +1,40 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>Article</h1>
+
+    <table class="table table-bordered table-hover table-striped table-responsive">
+        <tbody>
+            <tr>
+                <th>Code Compta</th>
+                <td>{{ entity.codeCpte }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ entity.nom }}</td>
+            </tr>
+            <tr>
+                <th>Taxes</th>
+                <td>{{ entity.taxes }} %</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{% if entity.type == true %} H.T {% else %} T.T.C {% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('article') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('article_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

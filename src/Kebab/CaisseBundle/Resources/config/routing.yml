@@ -1,0 +1,27 @@
+kebab_caisse_homepage:
+    path:     /
+    defaults: { _controller: KebabCaisseBundle:Default:index }
+
+KebabCaisseBundle_achat:
+    resource: "@KebabCaisseBundle/Resources/config/routing/achat.yml"
+    prefix:   /achat
+        
+KebabCaisseBundle_article:
+    resource: "@KebabCaisseBundle/Resources/config/routing/article.yml"
+    prefix:   /article
+        
+KebabCaisseBundle_fondcaisse:
+        resource: "@KebabCaisseBundle/Resources/config/routing/fondcaisse.yml"
+        prefix:   /fondcaisse
+        
+KebabCaisseBundle_perissable:
+        resource: "@KebabCaisseBundle/Resources/config/routing/perissable.yml"
+        prefix:   /perissable
+        
+KebabCaisseBundle_vente:
+        resource: "@KebabCaisseBundle/Resources/config/routing/vente.yml"
+        prefix:   /vente
+        
+KebabCaisseBundle_versement:
+        resource: "@KebabCaisseBundle/Resources/config/routing/versement.yml"
+        prefix:   /versement

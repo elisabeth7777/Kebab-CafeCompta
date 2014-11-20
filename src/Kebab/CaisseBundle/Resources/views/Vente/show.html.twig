@@ -1,0 +1,193 @@
+{% extends '::base.html.twig' %}
+{% block title %}Vente {{ entity.date|localizeddate('none', 'none', 'fr', null, "cccc dd MMMM-Y")|capitalize  }}{% endblock %}
+{% block sub_title -%}{% endblock %}
+{% block new_breadcrumb %}
+<li>
+    <i class="fa fa-angle-right"></i>
+        <a href="{{ path('vente') }}">Liste Ventes</a>
+</li>
+<li>
+    <i class="fa fa-angle-right"></i>
+        Vente Journalière
+</li>
+{% endblock %} 
+{% block body -%}
+{#    <h1>Vente</h1>#}
+<p><a class="btn btn-lg btn-primary" href="{{ path('vente_new') }}"><i class="fa fa-plus-circle"></i> Ajouter une vente</a></p>    
+
+    <table class="table table-responsive table-bordered table-striped table-hover">
+        <tbody>
+            <tr>
+                <th>Date</th>
+                <td>{{ entity.date|date('d-M-Y') }}</td>
+            </tr>
+            {% for entity in entity.articleventes %}
+            <tr>
+                <th>{{ entity.article.codeCpte }} - {{ entity.article.nom }}</th>
+                <td>{{ entity.montant}}</td>       
+            </tr>
+            {% endfor %} 
+            
+            <tr class="text-primary">
+                <th>Especes</th>
+                <td>{{ entity.especes }}</td>
+            </tr>
+            <tr>
+                <th>CB</th>
+                <td>{{ entity.cB }}</td>
+            </tr>
+            <tr>
+                <th>CH</th>
+                <td>{{ entity.cH }}</td>
+            </tr>
+            <tr class="text-primary">
+                <th>Total Ventes</th>
+                {% set Total = entity.especes + entity.cB + entity.cH %}
+                <td>{{ Total }}</td>
+            </tr>            
+
+        </tbody>
+    </table>
+            <div class="col-md-6">
+					<div class="portlet box yellow">
+						<div class="portlet-title">
+							<div class="caption">
+								<i class="fa fa-gift"></i>Produits
+							</div>
+							<div class="tools">
+								<a href="#portlet-config" data-toggle="modal" class="config">
+								</a>
+								<a href="javascript:;" class="reload">
+								</a>
+							</div>
+						</div>
+						<div class="portlet-body">
+{#							<h4>Default Pie with Legend.</h4>#}
+							<div id="produit" class="chart">
+							</div>
+						</div>
+                                        </div> 
+            </div>
+            <div class="col-md-6">
+					<div class="portlet box yellow">
+						<div class="portlet-title">
+							<div class="caption">
+								<i class="fa fa-gift"></i> Mode de Paiement
+							</div>
+							<div class="tools">
+								<a href="#portlet-config" data-toggle="modal" class="config">
+								</a>
+								<a href="javascript:;" class="reload">
+								</a>
+							</div>
+						</div>
+						<div class="portlet-body">
+{#							<h4>Default Pie with Legend.</h4>#}
+							<div id="revenue" class="chart">
+							</div>
+						</div>
+                                        </div> 
+            </div>            
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('vente') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('vente_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}
+{% block js_link %}
+<script src="{{ asset('global/plugins/flot/jquery.flot.min.js') }}"></script>
+<script src="{{ asset('global/plugins/flot/jquery.flot.resize.min.js') }}"></script>
+<script src="{{ asset('global/plugins/flot/jquery.flot.pie.min.js') }}"></script>
+<script src="{{ asset('global/plugins/flot/jquery.flot.stack.min.js') }}"></script>
+<script src="{{ asset('global/plugins/flot/jquery.flot.crosshair.min.js') }}"></script>
+<script src="{{ asset('global/plugins/flot/jquery.flot.categories.min.js') }}" type="text/javascript"></script>    
+    <script src="{{ asset('admin/pages/scripts/charts.js') }}"></script>
+{% endblock %}
+{% block javascript_others %}
+    {% set Total = entity.especes + entity.cB + entity.cH %}
+<script type="text/javascript">
+    
+        var dataProduit = [
+
+            {% for entity in entity.articleventes %}
+                { label: "{{ entity.article.codeCpte }} - {{ entity.article.nom }}",  data: {{entity.montant}} },
+
+            {% endfor %} 
+        ]; 
+
+        $.plot('#produit', dataProduit, {
+            series: {
+                pie: {
+                    show: true,
+                    radius: 1,
+                    tilt: 0.5,
+                    label: {
+                        show: true,
+                        radius: 1,
+                        formatter: labelFormatter,
+                        background: {
+                            opacity: 0.8
+                        }
+                    }
+                }
+            },
+            legend: {
+                show: false
+            },
+            grid: {
+                hoverable: true
+        }
+        }); 
+
+
+        var dataRevenue = [
+
+                { label: "Espèces",  data: {{ entity.especes }} },
+                { label: "CB",  data: {{ entity.cB }} },
+                { label: "CH",  data: {{ entity.cH }} }
+        ]; 
+
+        $.plot('#revenue', dataRevenue, {
+            series: {
+                pie: {
+                    show: true,
+                    radius: 1,
+                    tilt: 0.5,
+                    label: {
+                        show: true,
+                        radius: 1,
+                        formatter: labelFormatter,
+                        background: {
+                            opacity: 0.8
+                        }
+                    }
+                }
+            },
+            legend: {
+                show: false
+            },
+            grid: {
+                hoverable: true
+        }
+        });
+        
+	function labelFormatter(label, series) {
+		return '<div style="font-size:8pt;text-align:center;padding:2px;color:white;">' + label + '<br/>' + Math.round(series.percent) + '%</div>';
+	}
+</script>    
+{% endblock %} 
+{% block javascript %}
+{#   Charts.init();#}
+
+{#   Charts.initPieCharts();
+   Charts.initBarCharts();#}
+
+ {% endblock %}

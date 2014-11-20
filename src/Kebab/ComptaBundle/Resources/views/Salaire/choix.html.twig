@@ -1,0 +1,23 @@
+{% extends '::base.html.twig' %}
+{% form_theme form_M 'KebabComptaBundle:Form:fields.html.twig' %}
+{#{% form_theme form_T 'KebabComptaBundle:Form:year.html.twig' %}  #}
+{% block title %}Vente{% endblock %}
+{% block sub_title -%}Choix Tableau{% endblock %}
+{% block new_breadcrumb %}
+<li>
+    <i class="fa fa-angle-right"></i>
+        <a href="{{ path('vente') }}">Vente</a>
+</li>
+<li>
+    <i class="fa fa-angle-right"></i>
+        <a href="{{ path('vente_choix') }}">Choix Tableau</a>
+</li>
+{% endblock %} 
+{% block body -%}
+    <p>
+        {{ form(form_M, {'action': path('salaire_charges_mensuelles')}) }}</p>
+    </br></br>
+    <p>
+      
+        {{ form(form_T, {'action': path('salaire_charges_mensuelles')}) }}</p>
+{% endblock %}

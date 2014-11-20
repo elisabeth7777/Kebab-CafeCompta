@@ -1,0 +1,72 @@
+{% extends '::base.html.twig' %}
+{% block title %}Liste Taux{% endblock %}
+{% block sub_title -%}Charges Sociales{% endblock %}
+{% block new_breadcrumb %}
+<li>
+    <i class="fa fa-angle-right"></i>
+        <a href="{{ path('taux') }}">Taux</a>
+</li>
+{% endblock %} 
+{% block body -%}
+    <table class="table table-hover table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Année</th>
+                <th>Type</th>  
+                <th>URSAFF DEPL</th>
+                <th>URSAFF PLFD</th>
+                <th>URSAFF FNAL</th>
+                <th>CSG RDS</th>
+                <th>LODEOM</th>
+                <th>FILLON</th>
+                <th>CHOMAGE</th>
+                <th>AGS</th>
+                <th>RET N.CADRE</th>
+                <th>AGFF N.CADRE</th>
+                <th>TAXE APPR</th>
+                <th>TAXE PROF</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td>{% if entity.annee %}{{ entity.annee|date('Y') }}{% endif %}</td>
+                <td>{% if entity.type == "SAL" %}Part Salariale{% elseif entity.type == "PAT" %} Part Patronale{% endif %}</td>
+                <td>{{ entity.uRSAFFDEPL }} %</td>
+                <td>{{ entity.uRSAFFPLFD }} %</td>
+                <td>{{ entity.uRSAFFFNAL }} %</td>
+                <td>{{ entity.cSG }} % x {{ entity.rDS }} %</td>
+                <td>{{ entity.lODEOM }} %</td>
+                <td>{{ entity.fILLON }} %</td>
+                <td>{{ entity.cHOMAGE }} %</td>
+                <td>{{ entity.aGS }} %</td>
+                <td>{{ entity.rETNCADRE }} %</td>
+                <td>{{ entity.aGFFNCADRE }} %</td>
+                <td>{{ entity.tAXEAPPR }} %</td>
+                <td>{{ entity.tAXEPROF }} %</td>
+                
+                
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('taux_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('taux_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('taux_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+    {% endblock %}

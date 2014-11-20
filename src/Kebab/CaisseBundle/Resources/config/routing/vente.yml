@@ -1,0 +1,38 @@
+vente:
+    path:     /
+    defaults: { _controller: "KebabCaisseBundle:Vente:index" }
+    
+vente_choix:
+    path:     /choix
+    defaults: { _controller: "KebabCaisseBundle:Vente:choix" }
+
+vente_charges_mensuelles:
+    path:     /ventes-mensuelles
+    defaults: { _controller: "KebabCaisseBundle:Vente:venteM" }    
+
+vente_show:
+    path:     /{id}/show
+    defaults: { _controller: "KebabCaisseBundle:Vente:show" }
+
+vente_new:
+    path:     /new
+    defaults: { _controller: "KebabCaisseBundle:Vente:new" }
+
+vente_create:
+    path:     /create
+    defaults: { _controller: "KebabCaisseBundle:Vente:create" }
+    requirements: { _method: post }
+
+vente_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "KebabCaisseBundle:Vente:edit" }
+
+vente_update:
+    path:     /{id}/update
+    defaults: { _controller: "KebabCaisseBundle:Vente:update" }
+    requirements: { _method: post|put }
+
+vente_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "KebabCaisseBundle:Vente:delete" }
+    requirements: { _method: post|delete }

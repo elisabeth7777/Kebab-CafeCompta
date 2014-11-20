@@ -1,0 +1,30 @@
+achat:
+    path:     /
+    defaults: { _controller: "KebabCaisseBundle:Achat:index" }
+
+achat_show:
+    path:     /{id}/show
+    defaults: { _controller: "KebabCaisseBundle:Achat:show" }
+
+achat_new:
+    path:     /new
+    defaults: { _controller: "KebabCaisseBundle:Achat:new" }
+
+achat_create:
+    path:     /create
+    defaults: { _controller: "KebabCaisseBundle:Achat:create" }
+    requirements: { _method: post }
+
+achat_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "KebabCaisseBundle:Achat:edit" }
+
+achat_update:
+    path:     /{id}/update
+    defaults: { _controller: "KebabCaisseBundle:Achat:update" }
+    requirements: { _method: post|put }
+
+achat_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "KebabCaisseBundle:Achat:delete" }
+    requirements: { _method: post|delete }

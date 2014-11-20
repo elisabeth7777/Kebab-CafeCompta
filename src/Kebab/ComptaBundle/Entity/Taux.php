@@ -1,0 +1,498 @@
+<?php
+
+namespace Kebab\ComptaBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Taux
+ *
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="Kebab\ComptaBundle\Entity\TauxRepository")
+ */
+class Taux
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="URSAFF_DEPL", type="decimal", scale=2)
+     */
+    private $uRSAFFDEPL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="URSAFF_PLFD", type="decimal", scale=2)
+     */
+    private $uRSAFFPLFD;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="URSAFF_FNAL", type="decimal", scale=2)
+     */
+    private $uRSAFFFNAL;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="CSG", type="decimal", scale=2)
+     */
+    private $cSG;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="RDS", type="decimal", scale=2)
+     */
+    private $rDS;    
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="LODEOM", type="decimal", scale=2)
+     */
+    private $lODEOM;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="FILLON", type="decimal", scale=2)
+     */
+    private $fILLON;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="CHOMAGE", type="decimal", scale=2)
+     */
+    private $cHOMAGE;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="AGS", type="decimal", scale=2)
+     */
+    private $aGS;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="RET_N_CADRE", type="decimal", scale=2)
+     */
+    private $rETN_CADRE;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="AGFF_N_CADRE", type="decimal", scale=2)
+     */
+    private $aGFFN_CADRE;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="TAXE_APPR", type="decimal", scale=2)
+     */
+    private $tAXEAPPR;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="TAXE_PROF", type="decimal", scale=2)
+     */
+    private $tAXEPROF;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="Type", type="string", length=255)
+     */
+    private $type;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="Annee", type="date")
+     */
+    private $annee;
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set uRSAFFDEPL
+     *
+     * @param string $uRSAFFDEPL
+     * @return Taux
+     */
+    public function setURSAFFDEPL($uRSAFFDEPL)
+    {
+        $this->uRSAFFDEPL = $uRSAFFDEPL;
+
+        return $this;
+    }
+
+    /**
+     * Get uRSAFFDEPL
+     *
+     * @return string 
+     */
+    public function getURSAFFDEPL()
+    {
+        return $this->uRSAFFDEPL;
+    }
+
+    /**
+     * Set uRSAFFPLFD
+     *
+     * @param string $uRSAFFPLFD
+     * @return Taux
+     */
+    public function setURSAFFPLFD($uRSAFFPLFD)
+    {
+        $this->uRSAFFPLFD = $uRSAFFPLFD;
+
+        return $this;
+    }
+
+    /**
+     * Get uRSAFFPLFD
+     *
+     * @return string 
+     */
+    public function getURSAFFPLFD()
+    {
+        return $this->uRSAFFPLFD;
+    }
+
+    /**
+     * Set uRSAFFFNAL
+     *
+     * @param string $uRSAFFFNAL
+     * @return Taux
+     */
+    public function setURSAFFFNAL($uRSAFFFNAL)
+    {
+        $this->uRSAFFFNAL = $uRSAFFFNAL;
+
+        return $this;
+    }
+
+    /**
+     * Get uRSAFFFNAL
+     *
+     * @return string 
+     */
+    public function getURSAFFFNAL()
+    {
+        return $this->uRSAFFFNAL;
+    }
+
+    /**
+     * Set cSGRDS
+     *
+     * @param string $cSGRDS
+     * @return Taux
+     */
+    public function setCSGRDS($cSGRDS)
+    {
+        $this->cSGRDS = $cSGRDS;
+
+        return $this;
+    }
+
+
+    /**
+     * Set lODEOM
+     *
+     * @param string $lODEOM
+     * @return Taux
+     */
+    public function setLODEOM($lODEOM)
+    {
+        $this->lODEOM = $lODEOM;
+
+        return $this;
+    }
+
+    /**
+     * Get lODEOM
+     *
+     * @return string 
+     */
+    public function getLODEOM()
+    {
+        return $this->lODEOM;
+    }
+
+    /**
+     * Set fILLON
+     *
+     * @param string $fILLON
+     * @return Taux
+     */
+    public function setFILLON($fILLON)
+    {
+        $this->fILLON = $fILLON;
+
+        return $this;
+    }
+
+    /**
+     * Get fILLON
+     *
+     * @return string 
+     */
+    public function getFILLON()
+    {
+        return $this->fILLON;
+    }
+
+    /**
+     * Set cHOMAGE
+     *
+     * @param string $cHOMAGE
+     * @return Taux
+     */
+    public function setCHOMAGE($cHOMAGE)
+    {
+        $this->cHOMAGE = $cHOMAGE;
+
+        return $this;
+    }
+
+    /**
+     * Get cHOMAGE
+     *
+     * @return string 
+     */
+    public function getCHOMAGE()
+    {
+        return $this->cHOMAGE;
+    }
+
+    /**
+     * Set aGS
+     *
+     * @param string $aGS
+     * @return Taux
+     */
+    public function setAGS($aGS)
+    {
+        $this->aGS = $aGS;
+
+        return $this;
+    }
+
+    /**
+     * Get aGS
+     *
+     * @return string 
+     */
+    public function getAGS()
+    {
+        return $this->aGS;
+    }
+
+    /**
+     * Set rETN_CADRE
+     *
+     * @param string $rETNCADRE
+     * @return Taux
+     */
+    public function setRETNCADRE($rETNCADRE)
+    {
+        $this->rETN_CADRE = $rETNCADRE;
+
+        return $this;
+    }
+
+    /**
+     * Get rETN_CADRE
+     *
+     * @return string 
+     */
+    public function getRETNCADRE()
+    {
+        return $this->rETN_CADRE;
+    }
+
+    /**
+     * Set aGFFN_CADRE
+     *
+     * @param string $aGFFNCADRE
+     * @return Taux
+     */
+    public function setAGFFNCADRE($aGFFNCADRE)
+    {
+        $this->aGFFN_CADRE = $aGFFNCADRE;
+
+        return $this;
+    }
+
+    /**
+     * Get aGFFN_CADRE
+     *
+     * @return string 
+     */
+    public function getAGFFNCADRE()
+    {
+        return $this->aGFFN_CADRE;
+    }
+
+    /**
+     * Set tAXEAPPR
+     *
+     * @param string $tAXEAPPR
+     * @return Taux
+     */
+    public function setTAXEAPPR($tAXEAPPR)
+    {
+        $this->tAXEAPPR = $tAXEAPPR;
+
+        return $this;
+    }
+
+    /**
+     * Get tAXEAPPR
+     *
+     * @return string 
+     */
+    public function getTAXEAPPR()
+    {
+        return $this->tAXEAPPR;
+    }
+
+    /**
+     * Set tAXEPROF
+     *
+     * @param string $tAXEPROF
+     * @return Taux
+     */
+    public function setTAXEPROF($tAXEPROF)
+    {
+        $this->tAXEPROF = $tAXEPROF;
+
+        return $this;
+    }
+
+    /**
+     * Get tAXEPROF
+     *
+     * @return string 
+     */
+    public function getTAXEPROF()
+    {
+        return $this->tAXEPROF;
+    }
+
+    /**
+     * Set type
+     *
+     * @param string $type
+     * @return Taux
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return string 
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * Set annee
+     *
+     * @param \DateTime $annee
+     * @return Taux
+     */
+    public function setAnnee($annee)
+    {
+        $this->annee = $annee;
+
+        return $this;
+    }
+
+    /**
+     * Get annee
+     *
+     * @return \DateTime 
+     */
+    public function getAnnee()
+    {
+        return $this->annee;
+    }
+
+    /**
+     * Set cSG
+     *
+     * @param string $cSG
+     * @return Taux
+     */
+    public function setCSG($cSG)
+    {
+        $this->cSG = $cSG;
+
+        return $this;
+    }
+
+    /**
+     * Get cSG
+     *
+     * @return string 
+     */
+    public function getCSG()
+    {
+        return $this->cSG;
+    }
+
+    /**
+     * Set rDS
+     *
+     * @param string $rDS
+     * @return Taux
+     */
+    public function setRDS($rDS)
+    {
+        $this->rDS = $rDS;
+
+        return $this;
+    }
+
+    /**
+     * Get rDS
+     *
+     * @return string 
+     */
+    public function getRDS()
+    {
+        return $this->rDS;
+    }
+}
